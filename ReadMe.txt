@@ -79,3 +79,57 @@ controlador.ts
                                     //--- podemos quitar +id y poner unicamente id
     return this.todoService.findOne(+id);
   }
+
+
+CREACION DE NUEVA ENTRADA
+
+En controler.ts
+
+@Post()
+  create(@Body() createTodoDto: CreateTodoDto) {
+    return this.todoService.create(createTodoDto);
+}
+
+En create-todo.dto.ts
+
+export class CreateTodoDto {
+
+    description:string;
+
+}
+
+En servicio.ts
+
+create(createTodoDto: CreateTodoDto) {
+    console.log({createTodoDto});
+    return 'This action adds a new todo';
+
+}
+
+Instalamos las validaciones y las configuramos
+$npm add class-validator class-transformer
+
+Configuracion
+en main.ts añadimos  
+
+app.useGlobalPipes(
+    new ValidationPipe({
+      whitelist: true,
+      forbidNonWhitelisted:true,
+    })
+);
+
+
+En el servicio.ts
+//Creamos una nueva constante que deberia de venir de la BD
+
+create(createTodoDto: CreateTodoDto) :Todo {
+    const todo2 = new Todo();
+    //Codigo para crear id automaticamente 1,2,3,4...
+    todo2.id=Math.max(...this.todos.map(todo => todo.id),0)+1;
+    //console.log(...this.todos.map(todo => todo.id),'...this.todos.map(todo => todo.id)'); //Console Output: 123
+    todo2.description=createTodoDto.description;
+    this.todos.push(todo2);
+    return todo2;
+}
+

@@ -12,8 +12,14 @@ export class TodoService {
     {id:3, description:'Piedra del Espacio', done:false},
   ];
 
-  create(createTodoDto: CreateTodoDto) {
-    return 'This action adds a new todo';
+  create(createTodoDto: CreateTodoDto) :Todo {
+    const todo2 = new Todo();
+    //Codigo para crear id automaticamente 1,2,3,4...
+    todo2.id=Math.max(...this.todos.map(todo => todo.id),0)+1;
+    //console.log(...this.todos.map(todo => todo.id),'...this.todos.map(todo => todo.id)'); //Console Output: 123
+    todo2.description=createTodoDto.description;
+    this.todos.push(todo2);
+    return todo2;
   }
 
   findAll():Todo[] {
