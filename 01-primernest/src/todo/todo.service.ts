@@ -1,5 +1,4 @@
-import { Injectable } from '@nestjs/common';
-import { throws } from 'assert';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateTodoDto } from './dto/create-todo.dto';
 import { UpdateTodoDto } from './dto/update-todo.dto';
 import { Todo } from './entities/todo.entity';
@@ -22,7 +21,8 @@ export class TodoService {
   }
 
   findOne(ident: number) :Todo {
-    let seleccion= this.todos.find(el=> el.id=ident);
+    let seleccion= this.todos.find(el=> el.id===ident);
+    if (!seleccion) throw new NotFoundException(`TODO with ${ident} not found`);
     return seleccion;
   }
 

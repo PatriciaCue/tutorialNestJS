@@ -57,9 +57,25 @@ controlador.ts
 
 servicio.ts
 
-findOne(ident: number) :Todo {
-    let seleccion= this.todos.find(el=> el.id=ident);
+  findOne(ident: number) :Todo {
+    let seleccion= this.todos.find(el=> el.id===ident);
+    if (!seleccion) throw new NotFoundException(`TODO with ${ident} not found`); //importamos NotFoundException desde from '@nestjs/common';
     return seleccion;
-}
+  }
 
 
+DEFINICION DE PIPES
+
+controlador.ts
+//Vamos a pasar el id por un pipe que importamos
+ @Get(':id')
+  findOne(@Param('id') id: string):Todo {
+    return this.todoService.findOne(+id);
+    }
+
+@Get(':id')
+                      //---hemos añadido ParseIntPipe, si lo añadimos nos aseguramos que nos devuelve un num y no hace falta poner +id
+  findOne(@Param('id',ParseIntPipe) id: string):Todo {
+                                    //--- podemos quitar +id y poner unicamente id
+    return this.todoService.findOne(+id);
+  }
