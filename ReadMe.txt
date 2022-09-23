@@ -133,3 +133,15 @@ create(createTodoDto: CreateTodoDto) :Todo {
     return todo2;
 }
 
+
+UPDATE
+Tenemos update-todo.dto.ts
+esta clase hereda de create-todo.dto.ts
+
+Esto lo que quiere decir que tengo configurado de manera opcional los objetos que esten definidos en
+create-todo-dto.ts
+
+export class UpdateTodoDto extends PartialType(CreateTodoDto) {
+
+    
+}
