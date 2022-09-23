@@ -54,6 +54,9 @@ export class TodoService {
   }
 
   remove(id: number) {
-    return `This action removes a #${id} todo`;
+    //Verificamos que el id existe
+    const todo= this.findOne(id);
+    this.todos= this.todos.filter(todo=>todo.id !== id);
+    
   }
 }

@@ -145,3 +145,5 @@ export class UpdateTodoDto extends PartialType(CreateTodoDto) {
 
     
 }
+
+DELETE
